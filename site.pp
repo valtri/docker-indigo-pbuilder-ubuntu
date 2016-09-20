@@ -26,7 +26,7 @@ file{ 'G00precedence':
 }
 
 file{ 'repos.sh':
-  content => "case $PLATFORM in
+  content => "case \$PLATFORM in
         debian*|ubuntu*)
                 cat <<EOF
 #### INDIGO-${version} - Base repository - must be enabled ####
