@@ -12,9 +12,14 @@ Update image:
 
     docker pull valtri/docker-indigo-pbuilder-ubuntu
 
-Launch:
+Launch (from build directory):
 
-    docker run -it --privileged=true --name builder valtri/docker-indigo-pbuilder-ubuntu
+    docker run --privileged=true --name indigo_ubuntu --volume `pwd`:/docker:rw valtri/docker-indigo-pbuilder-ubuntu /bin/bash
+
+Example build (replace *${PACKAGE}.dsc*):
+
+    docker exec -u jenkins indigo_ubuntu chown jenkins:jenkins /docker
+    docker exec -u jenkins indigo_ubuntu /var/lib/jenkins/scripts/pkg-build-mock -d /docker -p ubuntu-14-x86_64 /docker/${PACKAGE}.dsc
 
 # Tags
 
