@@ -2,6 +2,8 @@ $jenkins_homedir = '/var/lib/jenkins'
 $platforms = [
   'ubuntu-14-x86_64',
 ]
+$refresh_log='/tmp/image-refresh.log'
+
 # indigo, indigo-preview, indigo-testing
 $repo='indigo'
 # 1, 2
@@ -75,6 +77,16 @@ esac
   path => "${jenkins_homedir}/scripts/repos.sh",
 }
 
+cron{ 'image-refresh':
+  command  => "${jenkins_homedir}/scripts/refresh-chroot >${refresh_log} 2>&1 || cat ${refresh_log}",
+  user     => 'jenkins',
+  hour     => fqdn_rand(24, 'refresh'),
+  minute   => fqdn_rand(60, 'refresh'),
+  month    => '*',
+  monthday => '*',
+  weekday  => '0',
+}
+
 Exec['download-jenkins-scripts']
 ->
 File[
@@ -82,6 +94,8 @@ File[
   'G00precedence',
   'repos.sh'
 ]
+->
+Cron['image-refresh']
 
 # refresh pbuilder images is not possible in unprivileged mode
 #->
