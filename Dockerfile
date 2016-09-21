@@ -7,6 +7,7 @@ RUN puppet module install cesnet/jenkins_node
 COPY site.pp /root
 
 RUN apt-get update \
+&& apt-get install -y openssh-server \
 && puppet apply /root/site.pp \
 && apt-get clean \
 && rm -rf /var/lib/apt/lists/*
