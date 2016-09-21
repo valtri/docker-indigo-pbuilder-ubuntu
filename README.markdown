@@ -18,7 +18,7 @@ Update image:
 
 Launch (from build directory):
 
-    docker run -td --privileged=true --name indigo_ubuntu --volume `pwd`:/docker:rw valtri/docker-indigo-pbuilder-ubuntu /bin/bash
+    docker run -td --privileged=true --name indigo_ubuntu --volume `pwd`:/docker:rw valtri/docker-indigo-pbuilder-ubuntu
 
 Example build (replace *${PACKAGE}.dsc*):
 
