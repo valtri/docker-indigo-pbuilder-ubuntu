@@ -13,3 +13,4 @@ RUN apt-get update \
 
 COPY ./docker-entry.sh /
 ENTRYPOINT ["/docker-entry.sh"]
+CMD ["tail",  "-f", "/dev/null"]

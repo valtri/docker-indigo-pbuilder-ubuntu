@@ -4,7 +4,11 @@ Builder container for Ubuntu 14.04 platform to build packages for [INDIGO-DataCl
 
 Container requires privileged mode as it uses pbuilder.
 
-For setup is used a puppet module [CESNET *jenkins\_node*](https://forge.puppet.com/cesnet/jenkins_node) and INDIGO-DataCloud repository version 1 is preconfigured.
+There is used for setup:
+
+* puppet module [CESNET *jenkins\_node*](https://forge.puppet.com/cesnet/jenkins_node)
+* INDIGO-DataCloud [build scripts](https://github.com/indigo-dc/jenkins-scripts)
+* INDIGO-DataCloud [repository](http://repo.indigo-datacloud.eu/#two) version 1
 
 # Launch
 
@@ -14,11 +18,11 @@ Update image:
 
 Launch (from build directory):
 
-    docker run --privileged=true --name indigo_ubuntu --volume `pwd`:/docker:rw valtri/docker-indigo-pbuilder-ubuntu /bin/bash
+    docker run -td --privileged=true --name indigo_ubuntu --volume `pwd`:/docker:rw valtri/docker-indigo-pbuilder-ubuntu /bin/bash
 
 Example build (replace *${PACKAGE}.dsc*):
 
-    docker exec -u jenkins indigo_ubuntu chown jenkins:jenkins /docker
+    docker exec indigo_ubuntu chown jenkins:jenkins /docker
     docker exec -u jenkins indigo_ubuntu /var/lib/jenkins/scripts/pkg-build-mock -d /docker -p ubuntu-14-x86_64 /docker/${PACKAGE}.dsc
 
 # Tags
